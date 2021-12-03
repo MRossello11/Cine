@@ -9,6 +9,8 @@ public class Cine {
     private int numFilas;
     private int numColumnas;
     private char arrayAsientos[][];
+    char[][] copiaArrayAsientos;
+    public int numAleatorios = 0;
 
 
     //constructor
@@ -18,11 +20,12 @@ public class Cine {
         this.numFilas = crearFilas();
         this.numColumnas = crearColumnas();
         this.arrayAsientos = new char[numFilas][numColumnas];
+        this.copiaArrayAsientos = this.arrayAsientos.clone();
     }
 
     public int crearFilas(){
-        numFilas = numAsientos/rand.nextInt(1, numAsientos); //asignar #filas
-       return numFilas;
+        this.numFilas = numAsientos/rand.nextInt(1, numAsientos); //asignar #filas
+        return numFilas;
     }
 
     public int crearColumnas(){
@@ -61,6 +64,7 @@ public class Cine {
 
     public void asignarAsiento(int f, int c){
         this.arrayAsientos[f][c] = 'x';
+
     }
 
     /*
@@ -68,12 +72,15 @@ public class Cine {
     si el asiento esta ocupado, se vuelve a intentar asignar un asiento en la siguiente iteracion
     @since 03/12/2021 */
     public void sentar() {
+
         boolean sentado = false;
 
         while (!sentado) {
+
             //numero de butaca random
             int fil = rand.nextInt(0, this.getNumFilas());
             int col = rand.nextInt(0, this.getNumColumnas());
+            numAleatorios++;
             if (this.getArrayAsientos()[fil][col] == '-') {
                 this.asignarAsiento(fil, col);
                 sentado = true;
