@@ -10,38 +10,75 @@ public class Cine {
     private int numColumnas;
     private char arrayAsientos[][];
 
+
+    //constructor
     public Cine(String nombre, int numAsientos){
         this.nombre = nombre;
         this.numAsientos = numAsientos;
-//        this.numFilas = numFilas;
-//        this.numColumnas = numColumnas;
+        this.numFilas = crearFilas();
+        this.numColumnas = crearColumnas();
         this.arrayAsientos = new char[numFilas][numColumnas];
     }
 
-    public void crearAsientos(){
-        numFilas = numAsientos/rand.nextInt(0, numAsientos); //asignar #filas
-        //asignar # columnas
-        if (numAsientos%numFilas == 0){
-            numColumnas = numAsientos/numFilas;
+    public int crearFilas(){
+        numFilas = numAsientos/rand.nextInt(1, numAsientos); //asignar #filas
+       return numFilas;
+    }
+
+    public int crearColumnas(){
+        if (this.numAsientos%numFilas == 0){
+            numColumnas = this.numAsientos/this.numFilas;
         }else{
-            numColumnas = numAsientos/numFilas + 1;
+            numColumnas = this.numAsientos/this.numFilas + 1;
         }
-        System.out.println("Filas: " + this.getNumFilas());
-        System.out.println("Columnas: " + this.getNumColumnas());
 
-        int resto = (numColumnas*numAsientos)-numAsientos;
-        //llenado arrayAsientos
+        return numColumnas;
+    }
+
+    public void crearAsientos(){
+        System.out.println("Filas: " + this.numFilas);
+        System.out.println("Columnas: " + this.numColumnas);
+
+        //resto indica el numero de filas que hay en la ultima columna
+        int resto = (this.numColumnas*this.numFilas)-this.numAsientos;
+
+        //bucle llenado del arrayAsientos (creacion butacas de la sala)
         for (int i = 0; i < numFilas; i++){
-            for (int j = 0; j < numColumnas - 1; j++){
-
+            for (int j = 0; j < numColumnas; j++){
+                //cuando el resto sea mayor que la fila actual y sea la penultima columna, pase la iteracion
+                //para cuando numAsientos/numFilas no sea entero y se asignen menos asientos a la ultima columna
+                //para compensar
+                if (i < resto && j == numColumnas-1){
+                    continue;
+                }
+                //crear asiento (vacio)
+                arrayAsientos[i][j] = '-';
 
             }
         }
-
+        //this.imprimirTodoArray(); //debug
     }
 
-    public void AsignarAsient(int f, int c){
-        this.getArrayAsientos()[f][c]=1;
+    public void asignarAsiento(int f, int c){
+        this.arrayAsientos[f][c] = 'x';
+    }
+
+    /*
+    genera numeros aleatorios (filas y columnas) e intenta asignar un asiento para esa iteracion,
+    si el asiento esta ocupado, se vuelve a intentar asignar un asiento en la siguiente iteracion
+    @since 03/12/2021 */
+    public void sentar() {
+        boolean sentado = false;
+
+        while (!sentado) {
+            //numero de butaca random
+            int fil = rand.nextInt(0, this.getNumFilas());
+            int col = rand.nextInt(0, this.getNumColumnas());
+            if (this.getArrayAsientos()[fil][col] == '-') {
+                this.asignarAsiento(fil, col);
+                sentado = true;
+            }
+        }
     }
 
     public String getNombre() {
@@ -84,7 +121,7 @@ public class Cine {
         this.arrayAsientos = arrayAsientos;
     }
 
-    public void ImprimirTodoArray(){
+    public void imprimirTodoArray(){
         for (int i=0; i<this.getNumFilas(); i++){
             for (int j=0; j<this.getNumColumnas();j++){
                 System.out.print(this.getArrayAsientos()[i][j]);
