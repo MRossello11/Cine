@@ -1,31 +1,27 @@
 /**
  * @author MRossello11
- * @version 1.3
- * @since 02/12/2021
- * @description clase de los objetos Cine*/
-package Parte1;
+ * @version 1.0
+ * @since 09/12/2021
+ * @description clase Sala del proyecto Cine*/
+package Parte2;
 
 import java.util.Random;
 
-public class Cine {
-    public Random rand = new Random();
-    private String nombre;
+public class Sala {
+    private Random rand = new Random();
     private int numAsientos;
     private int numFilas;
     private int numColumnas;
     private char arrayAsientos[][];
     public int numAleatorios = 0;
 
-
     //constructor
-    public Cine(String nombre, int numAsientos){
-        this.nombre = nombre; //nombre del cine
+    public Sala(){
         this.numAsientos = numAsientos; //numero de asientos del cine
         this.numFilas = crearFilas(); //filas
         this.numColumnas = crearColumnas(); //columnas
         this.arrayAsientos = new char[numFilas][numColumnas]; //array de los asientos
     }
-
     //crea un numero de filas aleatorias a partir del numero de asientos
     public int crearFilas(){
         this.numFilas = numAsientos/rand.nextInt(1, numAsientos); //asignar numero filas
@@ -108,15 +104,8 @@ public class Cine {
             System.out.println();
         }
     }
-    //metodos getters y setters
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    //getters y setters
 
     public int getNumAsientos() {
         return numAsientos;
