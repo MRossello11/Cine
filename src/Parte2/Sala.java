@@ -1,6 +1,6 @@
 /**
  * @author MRossello11
- * @version 1.0
+ * @version 1.1
  * @since 09/12/2021
  * @description clase Sala del proyecto Cine*/
 package Parte2;
@@ -13,14 +13,15 @@ public class Sala {
     private int numFilas;
     private int numColumnas;
     private char arrayAsientos[][];
-    public int numAleatorios = 0;
+    private static int numAleatorios = 0;
 
     //constructor
-    public Sala(){
+    public Sala(int numAsientos){
         this.numAsientos = numAsientos; //numero de asientos del cine
         this.numFilas = crearFilas(); //filas
         this.numColumnas = crearColumnas(); //columnas
         this.arrayAsientos = new char[numFilas][numColumnas]; //array de los asientos
+        this.crearAsientos();
     }
     //crea un numero de filas aleatorias a partir del numero de asientos
     public int crearFilas(){
@@ -97,9 +98,9 @@ public class Sala {
 
     //metodo que imprime el array de asientos
     public void imprimirTodoArray(){
-        for (int i=0; i<this.getNumFilas(); i++){
-            for (int j=0; j<this.getNumColumnas();j++){
-                System.out.print(this.getArrayAsientos()[i][j]);
+        for (int i=0; i<this.getNumFilas(); i++){ //bucle por cada fila
+            for (int j=0; j<this.getNumColumnas();j++){ //bucle por cada columna en cada fila
+                System.out.print(this.getArrayAsientos()[i][j]); //imprime cada asiento uno al lado del otro
             }
             System.out.println();
         }
@@ -137,5 +138,9 @@ public class Sala {
 
     public void setArrayAsientos(char[][] arrayAsientos) {
         this.arrayAsientos = arrayAsientos;
+    }
+
+    public static int getNumAleatorios() {
+        return numAleatorios;
     }
 }
