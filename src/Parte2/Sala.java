@@ -1,10 +1,12 @@
 /**
  * @author MRossello11
- * @version 1.1
+ * @version 1.2
  * @since 09/12/2021
  * @description clase Sala del proyecto Cine*/
 package Parte2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Sala {
@@ -14,6 +16,9 @@ public class Sala {
     private int numColumnas;
     private char arrayAsientos[][];
     private static int numAleatorios = 0;
+    private List<Asiento> asientos = new ArrayList<Asiento>();
+    private Pelicula p;
+    private int asientosOcupados = 0; //contador de asientos que se han asignado
 
     //constructor
     public Sala(int numAsientos){
@@ -22,7 +27,9 @@ public class Sala {
         this.numColumnas = crearColumnas(); //columnas
         this.arrayAsientos = new char[numFilas][numColumnas]; //array de los asientos
         this.crearAsientos();
+        this.p = new Pelicula();
     }
+
     //crea un numero de filas aleatorias a partir del numero de asientos
     public int crearFilas(){
         this.numFilas = numAsientos/rand.nextInt(1, numAsientos); //asignar numero filas
@@ -58,10 +65,9 @@ public class Sala {
                 }
                 //crear asiento (vacio)
                 arrayAsientos[i][j] = '-';
-
+                this.asientos.add(new Asiento(i,j));
             }
         }
-        //this.imprimirTodoArray(); //debug
     }
 
     /*metodo que se llama desde el metodo sentar() al encontrar un asiento vacio y
@@ -77,9 +83,22 @@ public class Sala {
     @since 03/12/2021 */
     public void sentar() {
 
-        boolean sentado = false;
+        boolean sentado = false; //evalua si el espectador tiene asiento asignado (se ha podido sentar) o no
+
+        Espectador e = new Espectador(); //creacion del objeto espectador
 
         while (!sentado) { //se itera hasta que se consiga asignar un asiento
+
+            //evaluar que el espectador tiene dinero suficiente
+            if (e.getDinero()<=Asiento.getPrecio()){ //7.5 es el precio estandar mas adelante este variara segun el asiento
+                System.out.println("El espectador no tiene dinero suficiente");
+                break;
+            }
+            //evaluar que el espectador tiene la edad suficiente para ver la pelicula en cuestion
+            if (e.getEdad() < this.p.getEdadMinima()){
+                System.out.println("El espectador no tiene la edad suficiente para ver la pelicula " + this.p.getNombre());
+            }
+            Cine.dineroRecolectado += Asiento.getPrecio();
 
             //numero de butaca random
             int fil = rand.nextInt(0, this.getNumFilas());
@@ -91,6 +110,7 @@ public class Sala {
                 //si el asiento esta libre ('-'), se asigna como ocupado y se sale del bucle
                 this.asignarAsiento(fil, col);
                 sentado = true;
+                asientosOcupados++; //al sentar a alguien, se aumenta el numero de asientos ocupados
             }
             //si no se consigue asignar el asiento, se vuelve a intentar en la proxima iteracion
         }
@@ -142,5 +162,13 @@ public class Sala {
 
     public static int getNumAleatorios() {
         return numAleatorios;
+    }
+
+    public int getAsientosOcupados() {
+        return asientosOcupados;
+    }
+
+    public Pelicula getP(){
+        return p;
     }
 }

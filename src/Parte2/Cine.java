@@ -1,6 +1,6 @@
 /**
  * @author MRossello11
- * @version 1.4
+ * @version 1.5
  * @since 02/12/2021
  * @description clase de los objetos Cine*/
 
@@ -17,6 +17,7 @@ public class Cine {
     private List<Sala> salas = new ArrayList<Sala>();
     private int contadorSalas = 0;
     private int asientosSala;
+    public static double dineroRecolectado;
 
     //constructor
     public Cine(String nombre, int numSalas, int asientosSala){
@@ -24,6 +25,7 @@ public class Cine {
         this.numSalas = numSalas; //numero de salas que tiene el cine
         this.asientosSala = asientosSala; //numero de asientos por sala
         this.salas = crearSalas();
+        this.dineroRecolectado = 0;
 
     }
 
@@ -38,13 +40,12 @@ public class Cine {
     //llena las salas
     public void llenarCine(){
         for (int i = 0; i < this.getNumSalas(); i++){
-            int asientosOcupados = 0; //contador de asientos que se han asignado
+            System.out.println("Llenando sala " + i + " con la pelicula " + this.getSalas().get(i).getP().getNombre());
             do {
                 this.getSalas().get(i).sentar(); //se asigna un asiento en la sala actual
-                asientosOcupados++; //al sentar a alguien, se aumenta el numero de asientos ocupados
                 System.out.println("..................................................."); //separa visualmente la impresion de las salas
                 this.getSalas().get(i).imprimirTodoArray(); //imprime la sala (asientos vacios y ocupados)
-            } while (asientosOcupados != this.getAsientosSala()); //cuando se hayan ocupado tantos asientos como asientos haya, sale del bucle
+            } while (this.getSalas().get(i).getAsientosOcupados() != this.getAsientosSala()); //cuando se hayan ocupado tantos asientos como asientos haya, sale del bucle
             System.out.println("Sala " + i + " llena");
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
@@ -82,5 +83,9 @@ public class Cine {
 
     public void setAsientosSala(int asientosSala) {
         this.asientosSala = asientosSala;
+    }
+
+    public static double getDineroRecolectado() {
+        return dineroRecolectado;
     }
 }

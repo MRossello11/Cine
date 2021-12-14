@@ -1,6 +1,6 @@
 /**
  * @author MRossello11
- * @version 1.0
+ * @version 1.1
  * @since 09/12/2021
  * @description clase Pelicula del proyecto Cine*/
 
@@ -21,8 +21,8 @@ public class Pelicula {
 
     //constructor
     public Pelicula(){
-        this.nombre = titulos[rand.nextInt(0, titulos.length)];
-        this.director = directores[rand.nextInt(0, directores.length)];
+        this.nombre = titulos[rand.nextInt(0, this.titulos.length)];
+        this.director = directores[rand.nextInt(0, this.directores.length)];
         this.edadMinima = generarEdadMinima();
     }
 

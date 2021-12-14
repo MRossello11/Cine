@@ -1,6 +1,6 @@
 /**
  * @author MRossello11
- * @version 1.0
+ * @version 1.1
  * @since 09/12/2021
  * @description clase Espectador del proyecto Cine*/
 package Parte2;
